@@ -1,0 +1,6 @@
+# SOPS config for oauth2-proxy secrets (manually applied, not ArgoCD-synced).
+# Decrypt with: sops -d k8s/oauth2-proxy-secrets.enc.yaml | kubectl apply -f -
+creation_rules:
+  - path_regex: .*\.enc\.yaml$
+    age: age15437xk7432fpwtrd2gpwcmh7xyzacvp2sy6qr5sq2n3zqah5u9tqw5s539
+    encrypted_regex: "^(home-client-secret|admin-client-secret|home-cookie-secret|admin-cookie-secret|client-secret|cookie-secret|secret)$"

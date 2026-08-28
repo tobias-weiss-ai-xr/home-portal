@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: oauth2-proxy-admin
+  namespace: home
+  labels:
+    app: oauth2-proxy
+    instance: admin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: oauth2-proxy
+      instance: admin
+  template:
+    metadata:
+      labels:
+        app: oauth2-proxy
+        instance: admin
+    spec:
+      containers:
+      - name: oauth2-proxy
+        image: quay.io/oauth2-proxy/oauth2-proxy@sha256:b1b2021fe8f4004573e8d690dec6c7bb29cc44364572cf8510a05bf3a0ae2ded
+        imagePullPolicy: IfNotPresent
+        args:
+        - --provider=oidc
+        - --oidc-issuer-url=https://id.home.opendesk-edu.org/realms/opendesk
+        - --client-id=admin-home-portal
+        - --redirect-url=https://admin.home.opendesk-edu.org/oauth2/callback
+        - --upstream=http://portal.home.svc.cluster.local:80
+        - --email-domain=*
+        - --cookie-name=_oauth2_proxy_admin_home
+        - --cookie-expire=168h
+        - --cookie-secure=true
+        - --cookie-httponly=true
+        - --cookie-samesite=lax
+        - --set-xauthrequest=true
+        - --set-authorization-header=true
+        - --pass-access-token=true
+        - --pass-host-header=true
+        - --whitelist-domain=.opendesk-edu.org
+        - --skip-auth-regex=/health|/ping
+        ports:
+        - containerPort: 4180
+          name: http
+        env:
+        - name: OAUTH2_PROXY_HTTP_ADDRESS
+          value: "0.0.0.0:4180"
+        - name: OAUTH2_PROXY_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: oauth2-proxy-secrets
+              key: admin-client-secret
+        - name: OAUTH2_PROXY_COOKIE_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: oauth2-proxy-secrets
+              key: admin-cookie-secret
+        resources:
+          limits:
+            memory: 64Mi
+            cpu: 250m

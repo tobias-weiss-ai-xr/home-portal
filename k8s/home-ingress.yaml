@@ -1,0 +1,37 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: home-portal
+  namespace: home
+  annotations:
+    haproxy-ingress.github.io/ssl-redirect: "true"
+    haproxy-ingress.github.io/backend-config-snippet: |
+      timeout server 3600s
+spec:
+  ingressClassName: haproxy
+  rules:
+  - host: home.opendesk-edu.org
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: oauth2-proxy-home
+            port:
+              number: 4180
+  - host: admin.home.opendesk-edu.org
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: oauth2-proxy-admin
+            port:
+              number: 4180
+  tls:
+  - hosts:
+    - home.opendesk-edu.org
+    - admin.home.opendesk-edu.org
+    secretName: opendesk-certificates-tls
