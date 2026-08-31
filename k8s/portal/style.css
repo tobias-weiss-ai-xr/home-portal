@@ -163,12 +163,16 @@ footer { background: var(--footer-bg); color: var(--footer-text); padding: 22px 
 footer a { color: var(--footer-text); text-decoration: none; opacity: 0.85; }
 footer a:hover { opacity: 1; text-decoration: underline; }
 
-/* Wetter-Widget (wetteronline.de) — kompakt, wie auf der Startpage */
-.weather-widget { display: flex; justify-content: center; }
+/* Wetter-Widget (wetteronline.de) — größer und im Kasten zentriert */
+.weather-title { text-align: center; }
+.weather-widget {
+  display: flex; justify-content: center; align-items: center;
+  min-height: 380px;
+}
 .weather-widget iframe {
-  width: 318px; height: 318px; max-width: 100%;
+  width: 360px; height: 360px; max-width: 100%;
   border: 1px solid var(--border); border-radius: 12px;
-  background: #10658e; display: inline-block;
+  background: #10658e; display: block;
 }
 
 /* Uni-Link-Kacheln: Untergruppen-Titel */
