@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Workplace Services</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header>
+  <div class="container header-row">
+    <div class="brand">
+      <h1>Workplace Services</h1>
+      <p>Zentrale Anlaufstelle für alle Dienste</p>
+    </div>
+    <nav class="user-nav" aria-label="Benutzer">
+      <span class="user-name" title="Angemeldet als"><span id="user-name">…</span></span>
+      <a class="btn-ghost" href="https://id.home.opendesk-edu.org/realms/opendesk/account" title="Kontoeinstellungen">Einstellungen</a>
+      <a class="btn-logout" href="/oauth2/sign_out?rd=https%3A%2F%2Fhome.opendesk-edu.org%2F">Abmelden</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <!-- Widgets row -->
+  <div class="widgets">
+    <div class="widget">
+      <h2>Wetter für Marburg</h2>
+      <div class="wetteronline">
+        <iframe src="https://www.wetteronline.de/cgi-bin/weathermap?city=MARBURG&country=DEU&lang=de&type=0"
+                title="WetterOnline Marburg" loading="lazy"></iframe>
+      </div>
+    </div>
+    <div class="widget">
+      <h2>Nachrichten der Universität</h2>
+      <ul id="feed-news">
+        <li class="loading">Lade Nachrichten...</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- News feeds row (Uni, Events, HRZ, UB) -->
+  <section class="feeds" aria-label="Nachrichten">
+    <div class="feed-card">
+      <h2>Veranstaltungen</h2>
+      <ul id="feed-events"><li class="loading">Lade...</li></ul>
+    </div>
+    <div class="feed-card">
+      <h2>HRZ</h2>
+      <ul id="feed-hrz"><li class="loading">Lade...</li></ul>
+    </div>
+    <div class="feed-card">
+      <h2>Universitätsbibliothek</h2>
+      <ul id="feed-ub"><li class="loading">Lade...</li></ul>
+    </div>
+  </section>
+
+  <!-- Services grid -->
+  <section aria-label="Dienste">
+    <h2 class="section-title">Dienste</h2>
+    <div class="func-grid">
+      <div class="func-card">
+        <div class="func-icon" aria-hidden="true">✉</div>
+        <h3>E-Mail &amp; Kalender</h3>
+        <p class="product">SOGo6</p>
+        <a href="https://sogo6.home.opendesk-edu.org" target="_blank" rel="noopener">Öffnen</a>
+      </div>
+      <div class="func-card">
+        <div class="func-icon" aria-hidden="true">☁</div>
+        <h3>Sync &amp; Share</h3>
+        <p class="product">OpenCloud</p>
+        <a href="https://cloud.home.opendesk-edu.org" target="_blank" rel="noopener">Öffnen</a>
+      </div>
+      <div class="func-card">
+        <div class="func-icon" aria-hidden="true">💬</div>
+        <h3>Chat</h3>
+        <p class="product">Matrix / Element</p>
+        <a href="https://chat.home.opendesk-edu.org" target="_blank" rel="noopener">Öffnen</a>
+      </div>
+      <div class="func-card">
+        <div class="func-icon" aria-hidden="true">📄</div>
+        <h3>Wiki</h3>
+        <p class="product">XWiki</p>
+        <a href="https://xwiki.home.opendesk-edu.org" target="_blank" rel="noopener">Öffnen</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Office tools -->
+  <section aria-label="Kleine Helfer">
+    <h2 class="section-title">Kleine Helfer</h2>
+    <div class="tools">
+      <div class="tool-card">
+        <h3>Notenschnitt</h3>
+        <p class="tool-desc">Gewichteter Durchschnitt aus Noten × Credits.</p>
+        <div class="tool-body">
+          <div id="grade-rows"></div>
+          <button type="button" class="btn-ghost-dark" id="grade-add">Zeile hinzufügen</button>
+          <p class="tool-result" id="grade-result"></p>
+        </div>
+      </div>
+
+      <div class="tool-card">
+        <h3>Kalenderwoche</h3>
+        <p class="tool-desc">Datum ↔ Kalenderwoche (ISO 8601).</p>
+        <div class="tool-body">
+          <div class="tool-row">
+            <label for="kw-date">Datum</label>
+            <input type="date" id="kw-date">
+            <button type="button" class="btn-ghost-dark" id="kw-from-date">→ KW</button>
+          </div>
+          <div class="tool-result" id="kw-result"></div>
+          <div class="tool-row">
+            <label for="kw-num">KW</label>
+            <input type="number" id="kw-num" min="1" max="53" placeholder="1–53">
+            <input type="number" id="kw-year" min="2000" max="2100" placeholder="Jahr">
+            <button type="button" class="btn-ghost-dark" id="kw-from-number">→ Datum</button>
+          </div>
+          <div class="tool-result" id="kw2-result"></div>
+        </div>
+      </div>
+
+      <div class="tool-card">
+        <h3>Passwort-Generator</h3>
+        <p class="tool-desc">Zufälliges, sicheres Passwort erzeugen.</p>
+        <div class="tool-body">
+          <div class="tool-row">
+            <label for="pw-len">Länge</label>
+            <input type="number" id="pw-len" min="6" max="64" value="16">
+            <label><input type="checkbox" id="pw-syms" checked> Symbole</label>
+          </div>
+          <div class="tool-row">
+            <input type="text" id="pw-out" readonly>
+            <button type="button" class="btn-ghost-dark" id="pw-gen">Generieren</button>
+            <button type="button" class="btn-ghost-dark" id="pw-copy">Kopieren</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="tool-card">
+        <h3>Kosten-Teiler</h3>
+        <p class="tool-desc">Rechnung auf Personen aufteilen (inkl. Trinkgeld).</p>
+        <div class="tool-body">
+          <div class="tool-row">
+            <label for="split-amount">Betrag (€)</label>
+            <input type="number" id="split-amount" min="0" step="0.01" placeholder="42.00">
+          </div>
+          <div class="tool-row">
+            <label for="split-people">Personen</label>
+            <input type="number" id="split-people" min="1" max="50" value="2">
+          </div>
+          <div class="tool-row">
+            <label for="split-tip">Trinkgeld (%)</label>
+            <input type="number" id="split-tip" min="0" max="100" value="0">
+          </div>
+          <button type="button" class="btn-ghost-dark" id="split-calc">Berechnen</button>
+          <p class="tool-result" id="split-result"></p>
+        </div>
+      </div>
+
+      <div class="tool-card">
+        <h3>To-Do-Liste</h3>
+        <p class="tool-desc">Wird lokal im Browser gespeichert (localStorage).</p>
+        <div class="tool-body">
+          <div class="tool-row">
+            <input type="text" id="todo-input" placeholder="Neue Aufgabe…">
+            <button type="button" class="btn-ghost-dark" id="todo-add">Hinzufügen</button>
+          </div>
+          <ul id="todo-list"></ul>
+        </div>
+      </div>
+
+      <div class="tool-card">
+        <h3>Rechner</h3>
+        <p class="tool-desc">Einfacher Taschenrechner.</p>
+        <div class="tool-body">
+          <input type="text" id="calc-display" readonly>
+          <div class="calc-grid" id="calc-keys"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Admin -->
+  <div class="admin-section">
+    <p>Administratorzugang:</p>
+    <a href="https://admin.home.opendesk-edu.org">Admin Portal</a>
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <p>
+      <a href="https://www.uni-marburg.de">Philipps-Universität Marburg</a> |
+      <a href="https://www.uni-marburg.de/de/hrz">HRZ</a> |
+      <a href="https://www.uni-marburg.de/de/ub">UB</a>
+    </p>
+  </div>
+</footer>
+
+<script src="/static/app.js"></script>
+</body>
+</html>

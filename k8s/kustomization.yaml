@@ -2,7 +2,6 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
 - namespace.yaml
-- portal-configmap.yaml
 - portal-deployment.yaml
 - portal-service.yaml
 - oauth2-proxy-home-deployment.yaml
@@ -10,3 +9,13 @@ resources:
 - oauth2-proxy-admin-deployment.yaml
 - oauth2-proxy-admin-service.yaml
 - home-ingress.yaml
+configMapGenerator:
+- name: portal-html
+  namespace: home
+  files:
+  - portal/index.html
+  - portal/style.css
+  - portal/nginx.conf
+  - portal/js/app.js
+generatorOptions:
+  disableNameSuffixHash: true
