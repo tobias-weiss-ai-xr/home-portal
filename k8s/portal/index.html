@@ -23,25 +23,6 @@
 </header>
 
 <main class="container">
-  <!-- Widgets row -->
-  <div class="widgets">
-    <div class="widget">
-      <h2 class="weather-title">Wetter für Marburg</h2>
-      <div class="weather-widget">
-        <iframe
-          src="https://api.wetteronline.de/wetterwidget?gid=10630&amp;modeid=FC1&amp;locationname=Marburg&amp;lang=de"
-          title="Wetter Marburg - wetteronline.de"
-          loading="lazy" scrolling="no" frameborder="0" allowtransparency="true"></iframe>
-      </div>
-    </div>
-    <div class="widget">
-      <h2>Nachrichten der Universität</h2>
-      <ul id="feed-news">
-        <li class="loading">Lade Nachrichten...</li>
-      </ul>
-    </div>
-  </div>
-
   <!-- Services grid -->
   <section aria-label="Dienste">
     <h2 class="section-title">Dienste</h2>
@@ -89,8 +70,39 @@
         <p class="product">Lernplattform</p>
         <a href="https://ilias.uni-marburg.de" target="_blank" rel="noopener">Öffnen</a>
       </div>
+      <div class="func-card">
+        <div class="func-icon" aria-hidden="true">📦</div>
+        <h3>next.hessenbox</h3>
+        <p class="product">Sync &amp; Share (Cloud)</p>
+        <a href="https://next.hessenbox.de" target="_blank" rel="noopener">Öffnen</a>
+      </div>
+      <div class="func-card">
+        <div class="func-icon" aria-hidden="true">🗺</div>
+        <h3>Personenverzeichnis</h3>
+        <p class="product">LDAP-Verzeichnis</p>
+        <a href="https://www.uni-marburg.de/de/hrz/dienste/personenverzeichnis" target="_blank" rel="noopener">Öffnen</a>
+      </div>
     </div>
   </section>
+
+  <!-- Widgets row (Wetter + Nachrichten) -->
+  <div class="widgets">
+    <div class="widget">
+      <h2 class="weather-title">Wetter für Marburg</h2>
+      <div class="weather-widget">
+        <iframe
+          src="https://api.wetteronline.de/wetterwidget?gid=10630&amp;modeid=FC1&amp;locationname=Marburg&amp;lang=de"
+          title="Wetter Marburg - wetteronline.de"
+          loading="lazy" scrolling="no" frameborder="0" allowtransparency="true"></iframe>
+      </div>
+    </div>
+    <div class="widget">
+      <h2>Nachrichten der Universität</h2>
+      <ul id="feed-news">
+        <li class="loading">Lade Nachrichten...</li>
+      </ul>
+    </div>
+  </div>
 
   <!-- News feeds row (Uni, Events, HRZ, UB) -->
   <section class="feeds" aria-label="Nachrichten">
