@@ -35,6 +35,7 @@ function fmtDate(iso) {
 function loadFeed(key) {
   const cfg = FEEDS[key];
   const list = document.getElementById('feed-' + key);
+  if (!list) return; // Feed nur auf der Startseite
   fetch(cfg.path)
     .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
     .then(text => {
@@ -274,12 +275,15 @@ document.addEventListener('DOMContentLoaded', () => {
   // refresh feeds every 10 min
   setInterval(() => Object.keys(FEEDS).forEach(loadFeed), 10 * 60 * 1000);
 
-  document.getElementById('grade-add').addEventListener('click', () => { gradeState().push({}); renderGradeRows(); });
-  renderGradeRows();
-
-  initKW();
-  initPassword();
-  initSplit();
-  initTodo();
-  initCalc();
+  // Kleine Helfer existieren nur auf der Seite "Weitere Dienste".
+  // Guards, damit die Landing Page ohne sie sauber läuft.
+  if (document.getElementById('grade-add')) {
+    document.getElementById('grade-add').addEventListener('click', () => { gradeState().push({}); renderGradeRows(); });
+    renderGradeRows();
+  }
+  if (document.getElementById('kw-date')) initKW();
+  if (document.getElementById('pw-len')) initPassword();
+  if (document.getElementById('split-calc')) initSplit();
+  if (document.getElementById('todo-input')) initTodo();
+  if (document.getElementById('calc-display')) initCalc();
 });
